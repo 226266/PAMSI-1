@@ -145,23 +145,23 @@ void Array::doAlgorithm(unsigned int amount) {
 			break;
 	}
 
-//	std::cout << "Twoja tablica przed sortowaniem:\n";
-//	for(unsigned int i = 0; i < _size; ++i) {
-//		std::cout << readElem(i) << " ";
-//	}
-//	std::cout << std::endl;
+	std::cout << "Twoja tablica przed sortowaniem:\n";
+	for(unsigned int i = 0; i < _size; ++i) {
+		std::cout << readElem(i) << " ";
+	}
+	std::cout << std::endl;
 
 
 	for (unsigned int i = 0; i < amount; ++i) {
-		mergesort(0, _size-1);
+		quicksort(0, _size-1);
 	}
 
 
-//	std::cout << "Twoja tablica po sortowaniu:\n";
-//	for(unsigned int i = 0; i < _size; ++i) {
-//		std::cout << readElem(i) << " ";
-//	}
-//	std::cout << std::endl;
+	std::cout << "Twoja tablica po sortowaniu:\n";
+	for(unsigned int i = 0; i < _size; ++i) {
+		std::cout << readElem(i) << " ";
+	}
+	std::cout << std::endl;
 
 }
 
@@ -174,44 +174,56 @@ void Array::neutralise() {
 
 }
 
+// scalenie posortowanych podtablic
 void Array::merge(int left, int middle, int right) {
-	
-	int i;
-	int j;
-	int k;
-	//std::cout << "ZIEMNIAK INSIDE" << std::endl;
-	for (i = left; i <= right; i++) {
+
+	int i = left;
+	int j = middle + 1;
+ 
+	//kopiujemy lewą i prawą część tablicy do tablicy pomocniczej
+	for(int i = left; i <= right; ++i) {
 		pom[i] = _pArray[i];
 	}
-	
-	//i = left;
-	j = middle + 1;
-	k = left;
 
-	while (i <= middle && j <= right) {
-		if (pom[i] < _pArray[j]) {
-			_pArray[k++] = pom[i++];
+	//scalenie dwóch podtablic pomocniczych i zapisanie ich we własciwej tablicy
+	for(int k = left; k <= right; ++k) {
+		if(i <= middle) {
+			if(j <= right) {
+				if(pom[j] < pom[i]) {
+					_pArray[k] = pom[j++];
+				}
+				else {
+					_pArray[k] = pom[i++];
+				}
+			}
+			else {
+				_pArray[k] = pom[i++];
+			}
 		}
 		else {
-			_pArray[k++] = pom[j++];
+			_pArray[k] = pom[j++];
 		}
-	}
-	while (i <= middle) {
-		_pArray[k++] = pom[i++];
 	}
 
 }
 
+///////////////////////////////////////////////////////////
+ 
 void Array::mergesort(int left, int right) {
-	int middle;
 
-	if (left < right) {
+	//gdy mamy jeden element, to jest on już posortowany
+	if(right <= left) {
+		return;
+	} 
 
-	middle = (right + left) / 2; //środek tablicy
-	//std::cout << "ZIEMNIAK" << std::endl;
-	mergesort(left, middle);
-	mergesort(middle + 1, right);
+	//znajdujemy middle podtablicy
+	int middle = (right+left)/2;
 
+	//dzielimy tablice na częsć lewą i prawa
+	mergesort(left, middle); 
+	mergesort(middle+1, right);
+
+	//scalamy dwie już posortowane tablice
 	merge(left, middle, right);
-	}
+
 }
