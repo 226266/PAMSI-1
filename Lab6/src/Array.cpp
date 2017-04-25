@@ -145,24 +145,24 @@ void Array::doAlgorithm(unsigned int amount) {
 			break;
 	}
 
-	std::cout << "Twoja tablica przed sortowaniem:\n";
+/*	std::cout << "Twoja tablica przed sortowaniem:\n";
 	for(unsigned int i = 0; i < _size; ++i) {
 		std::cout << readElem(i) << " ";
 	}
 	std::cout << std::endl;
-
+*/
 
 	for (unsigned int i = 0; i < amount; ++i) {
-		quicksort(0, _size-1);
+		mergesort(0, _size-1);
 	}
 
 
-	std::cout << "Twoja tablica po sortowaniu:\n";
+/*	std::cout << "Twoja tablica po sortowaniu:\n";
 	for(unsigned int i = 0; i < _size; ++i) {
 		std::cout << readElem(i) << " ";
 	}
 	std::cout << std::endl;
-
+*/
 }
 
 
